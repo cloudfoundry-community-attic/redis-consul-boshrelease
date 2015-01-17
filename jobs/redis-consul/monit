@@ -1,0 +1,5 @@
+check process redis_consul
+  with pidfile /var/vcap/sys/run/redis_consul/redis_consul.pid
+  start program "/var/vcap/jobs/redis_consul/bin/monit_debugger redis_consul_ctl '/var/vcap/jobs/redis_consul/bin/redis_consul_ctl start'"
+  stop program "/var/vcap/jobs/redis_consul/bin/monit_debugger redis_consul_ctl '/var/vcap/jobs/redis_consul/bin/redis_consul_ctl stop'"
+  group vcap
