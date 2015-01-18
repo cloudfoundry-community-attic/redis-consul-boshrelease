@@ -16,6 +16,9 @@ jobs:
     properties:
       redis: ~
       network: redis1
+      consul:
+        service:
+          tags: ["redis", "leader", "master", "write", "read"]
   - name: redis_z1
     templates: (( meta.job_templates ))
     instances: 0
@@ -30,6 +33,9 @@ jobs:
       redis:
         master: (( merge ))
       network: redis1
+      consul:
+        service:
+          tags: ["redis", "slave", "read"]
 
 properties:
   consul: ~
