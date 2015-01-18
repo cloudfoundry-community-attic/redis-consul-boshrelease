@@ -1,7 +1,7 @@
 {
     "service": {
         "name": "<%= p("consul.service.name", spec.deployment) %>",
-        "tags": [""],
+        "tags": <%= p("consul.service.tags").to_json %>,
         "port": <%= p("redis.port") %>,
         "check": {
           "id": "redis-set",

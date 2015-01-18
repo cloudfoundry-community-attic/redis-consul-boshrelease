@@ -2,22 +2,25 @@
 name: redis-consul
 packages: []
 templates:
-  bin/monit_debugger: bin/monit_debugger
-  bin/redis_consul_templates_ctl: bin/redis_consul_templates_ctl
-  data/properties.sh.erb: data/properties.sh
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
-  helpers/ctl_utils.sh: helpers/ctl_utils.sh
   consul/redis-service.json.erb: consul/redis-service.json
   consul/redis-disk-level.json.erb: consul/redis-disk-level.json
 properties:
+  redis.port:
+    description: Port to listen for requests to redis server
+    default: 6379
+
   consul.service.name:
-    description: Name for advertising/discovering this service over consul (defaults to deployment name)
+    description: Name for advertising/discovering this service over consul
+  consul.service.tags:
+    description: Array of tags to include in consul advertisement
+    default: ["redis"]
+
   health.interval:
     description: Interval for consul to perform health checks
     default: "20s"
   health.disk.critical:
     description: Percentage of persistent disk full to trigger critial health alert
-    default: 98
+    default: 95
   health.disk.warning:
     description: Percentage of persistent disk full to trigger warning health alert
     default: 50
