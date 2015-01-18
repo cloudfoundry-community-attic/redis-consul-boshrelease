@@ -2,22 +2,30 @@
 
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
+set -x
 
 # Setup env vars and folders for the webapp_ctl script
-source /var/vcap/jobs/redis_consul/helpers/ctl_setup.sh 'redis_consul'
+source /var/vcap/jobs/redis-consul/helpers/ctl_setup.sh 'redis-consul'
 
-export PORT=${PORT:-5000}
-export LANG=en_US.UTF-8
+export CONSUL_TMPL_DIR=/var/vcap/sys/run/consul/redis-consul
 
 case $1 in
 
   start)
     pid_guard $PIDFILE $JOB_NAME
 
+    # consul-template wants to create a small number file in current dir?
+    # so need a place that has permissions for vcap user
+    mkdir -p $CONSUL_TMPL_DIR
+    chown vcap:vcap -R $CONSUL_TMPL_DIR
+    cd $CONSUL_TMPL_DIR
+
     # store pid in $PIDFILE
     echo $$ > $PIDFILE
 
-    exec chpst -u vcap:vcap redis_consul \
+    exec chpst -u vcap:vcap \
+    consul-template \
+      -template "$JOB_DIR/consul/display.ctmpl:$CONSUL_TMPL_DIR/display" \
          >>$LOG_DIR/$JOB_NAME.stdout.log \
          2>>$LOG_DIR/$JOB_NAME.stderr.log
 

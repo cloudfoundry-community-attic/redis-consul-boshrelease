@@ -9,10 +9,10 @@ meta:
   job_templates:
     - name: consul
       release: consul
-    - name: redis-consul
-      release: redis-consul
     - name: redis
       release: redis
+    - name: redis-consul
+      release: redis-consul
   stemcell:
     name: STEMCELL
 
@@ -20,9 +20,9 @@ director_uuid: PLACEHOLDER-DIRECTOR-UUID
 releases:
   - name: redis
     version: latest
-  - name: redis-consul
-    version: latest
   - name: consul
+    version: latest
+  - name: redis-consul
     version: latest
 properties:
   consul:

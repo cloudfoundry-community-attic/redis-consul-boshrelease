@@ -4,10 +4,19 @@ packages: []
 templates:
   bin/monit_debugger: bin/monit_debugger
   bin/redis_consul_ctl: bin/redis_consul_ctl
-  config/redis_consul.conf.erb: config/redis_consul.conf
   data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
+  consul/display.ctmpl: consul/display.ctmpl
 properties:
-  redis_consul.leader_address:
-    description: Hostname/IP to the leader/master of the cluster
+  consul.service.name:
+    description: Name for advertising/discovering this service over consul (defaults to deployment name)
+  health.interval:
+    description: Interval for consul to perform health checks
+    default: "20s"
+  health.disk.critical:
+    description: Percentage of persistent disk full to trigger critial health alert
+    default: 98
+  health.disk.warning:
+    description: Percentage of persistent disk full to trigger warning health alert
+    default: 50
