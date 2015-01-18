@@ -7,8 +7,8 @@ templates:
   data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
-  consul/display.ctmpl: consul/display.ctmpl
   consul/redis-service.json.erb: consul/redis-service.json
+  consul/redis-disk-level.json.erb: consul/redis-disk-level.json
 properties:
   consul.service.name:
     description: Name for advertising/discovering this service over consul (defaults to deployment name)

@@ -25,8 +25,8 @@ case $1 in
 
     exec chpst -u vcap:vcap \
     consul-template \
-      -template "$JOB_DIR/consul/display.ctmpl:$RUN_DIR/display" \
       -template "$JOB_DIR/consul/redis-service.json:$CONSUL_TMPL_DIR/redis-service.json" \
+      -template "$JOB_DIR/consul/redis-disk-level.json:$CONSUL_TMPL_DIR/redis-disk-level.json" \
          >>$LOG_DIR/$JOB_NAME.stdout.log \
          2>>$LOG_DIR/$JOB_NAME.stderr.log
 
