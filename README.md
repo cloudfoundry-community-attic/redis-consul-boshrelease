@@ -1,6 +1,25 @@
-# BOSH Release for redis-consul
+Advertise/monitor Redis clusters with Consul
+============================================
 
-## Usage
+This is a "joiner" BOSH release to upgrade a [redis-boshrelease](https://github.com/cloudfoundry-community/redis-boshrelease) deployment to include consul agents on all machines and monitoring/advertising of redis processes.
+
+This uses the [consul-boshrelease](https://github.com/cloudfoundry-community/consul-boshrelease), and assumes Redis is being deployed using this [redis-boshrelease](https://github.com/cloudfoundry-community/redis-boshrelease).
+
+Usage
+-----
+
+Instead of deploying only the `redis` job template from [redis-boshrelease](https://github.com/cloudfoundry-community/redis-boshrelease), the pattern to use is to combine three job templates from three BOSH releases.
+
+-	`redis` from redis-boshrelease
+-	`redis-consul` from consul-redis-boshrelease
+-	`consul` from consul-boshrelease
+
+This pattern of a "join release" between `redis` and `consul` means that these two BOSH releases can operate independently of each other, and the `redis-consul` release "joins" them together. Hence its called a "joiner" release.
+
+Deployment
+----------
+
+You would use the spiff templates from this project, rather than the `redis-boshrelease`.
 
 To use this bosh release, first upload it to your bosh:
 
@@ -31,7 +50,7 @@ For AWS & Openstack, the default deployment assumes there is a `default` securit
 
 Create a file `my-networking.yml`:
 
-``` yaml
+```yaml
 ---
 networks:
   - name: redis-consul1

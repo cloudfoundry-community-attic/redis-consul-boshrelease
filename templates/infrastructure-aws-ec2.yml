@@ -1,27 +1,36 @@
 meta:
-  environment: (( merge ))
-  dns_root: (( merge ))
+  environment: redis-aws
   security_groups: (( merge ))
-  persistent_disk: 4096
 
   stemcell:
-    name: bosh-aws-xen-ubuntu
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
     version: latest
 
+  persistent_disk: 4096
+
+update:
+  canaries: 1
+  max_in_flight: 50
+  canary_watch_time: 1000-100000
+  update_watch_time: 1000-100000
+
 jobs:
-  - name: redis_consul_leader_z1
+  - name: redis_leader_z1
     instances: 1
     networks:
-      - name: redis_consul1
+      - name: redis1
+        static_ips: ~
     persistent_disk: (( meta.persistent_disk ))
-  - name: redis_consul_z1
-    instances: 2
+  - name: redis_z1
+    instances: 1
     networks:
-      - name: redis_consul1
+      - name: redis1
+        static_ips: ~
     persistent_disk: (( meta.persistent_disk ))
     properties:
-      redis_consul:
-        leader_address: (( "0.redis-consul-leader-z1.redis-consul1." meta.environment "." meta.dns_root ))
+      redis:
+        master: (( "0.redis-leader-z1.redis1." meta.environment ".microbosh" ))
+      network: redis1
 
 compilation:
   cloud_properties:
@@ -36,7 +45,7 @@ networks:
   - name: floating
     type: vip
     cloud_properties: {}
-  - name: redis_consul1
+  - name: redis1
     type: dynamic
     cloud_properties:
       security_groups: (( meta.security_groups ))

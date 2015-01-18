@@ -1,33 +1,35 @@
+networks: (( merge ))
+
 meta:
   environment: ~
-
-update:
-  canaries: 1
-  max_in_flight: 50
-  canary_watch_time: 1000-30000
-  update_watch_time: 1000-30000
-  serial: false
+  job_templates: (( merge ))
 
 jobs:
-  - name: redis_consul_leader_z1
-    template: redis-consul
+  - name: redis_leader_z1
+    templates: (( meta.job_templates ))
     instances: 0
     resource_pool: small_z1
-    networks: (( merge ))
+    networks:
+      - name: redis1
+        static_ips: ~
     persistent_disk: 0
-    properties: {}
-  - name: redis_consul_z1
-    template: redis-consul
+    properties:
+      redis: ~
+      network: redis1
+  - name: redis_z1
+    templates: (( meta.job_templates ))
     instances: 0
     resource_pool: small_z1
-    networks: (( merge ))
+    networks:
+      - name: redis1
+        static_ips: ~
     persistent_disk: 0
     update:
       canaries: 10
     properties:
-      redis_consul:
-        leader_address: (( merge ))
+      redis:
+        master: (( merge ))
+      network: redis1
 
-networks: (( merge ))
-
-properties: {}
+properties:
+  consul: ~
