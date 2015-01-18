@@ -1,11 +1,11 @@
 Advertise/monitor Redis clusters with Consul
 ============================================
 
-WIP - initial work.
-
 This is a "joiner" BOSH release to upgrade a [redis-boshrelease](https://github.com/cloudfoundry-community/redis-boshrelease) deployment to include consul agents on all machines and monitoring/advertising of redis processes.
 
 This uses the [consul-boshrelease](https://github.com/cloudfoundry-community/consul-boshrelease), and assumes Redis is being deployed using this [redis-boshrelease](https://github.com/cloudfoundry-community/redis-boshrelease).
+
+![consul-ui](http://cl.ly/image/2O1G361Z3M0E/redis_cluster_in_consul_ui.png)
 
 Usage
 -----
