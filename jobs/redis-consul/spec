@@ -3,11 +3,12 @@ name: redis-consul
 packages: []
 templates:
   bin/monit_debugger: bin/monit_debugger
-  bin/redis_consul_ctl: bin/redis_consul_ctl
+  bin/redis_consul_templates_ctl: bin/redis_consul_templates_ctl
   data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
   consul/display.ctmpl: consul/display.ctmpl
+  consul/redis-service.json.erb: consul/redis-service.json
 properties:
   consul.service.name:
     description: Name for advertising/discovering this service over consul (defaults to deployment name)

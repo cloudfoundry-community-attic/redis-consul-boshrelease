@@ -1,5 +1,5 @@
-check process redis_consul
-  with pidfile /var/vcap/sys/run/redis-consul/redis-consul.pid
-  start program "/var/vcap/jobs/redis/bin/monit_debugger redis_consul_ctl '/var/vcap/jobs/redis-consul/bin/redis_consul_ctl start'"
-  stop program "/var/vcap/jobs/redis/bin/monit_debugger redis_consul_ctl '/var/vcap/jobs/redis-consul/bin/redis_consul_ctl stop'"
+check process redis_consul_templates_ctl
+  with pidfile /var/vcap/sys/run/redis-consul/redis-consul-templates.pid
+  start program "/var/vcap/jobs/redis/bin/monit_debugger redis_consul_templates_ctl '/var/vcap/jobs/redis-consul/bin/redis_consul_templates_ctl start'"
+  stop program "/var/vcap/jobs/redis/bin/monit_debugger redis_consul_templates_ctl '/var/vcap/jobs/redis-consul/bin/redis_consul_templates_ctl stop'"
   group vcap

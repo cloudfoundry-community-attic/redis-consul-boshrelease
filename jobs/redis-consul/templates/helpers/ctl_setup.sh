@@ -5,16 +5,16 @@
 # as possible
 
 # Usage options:
-# source /var/vcap/jobs/foobar/helpers/ctl_setup.sh JOB_NAME OUTPUT_LABEL
+# source /var/vcap/jobs/foobar/helpers/ctl_setup.sh JOB_NAME TASK_NAME
 # source /var/vcap/jobs/foobar/helpers/ctl_setup.sh foobar
-# source /var/vcap/jobs/foobar/helpers/ctl_setup.sh foobar foobar
+# source /var/vcap/jobs/foobar/helpers/ctl_setup.sh foobar foobar-runner
 # source /var/vcap/jobs/foobar/helpers/ctl_setup.sh foobar nginx
 
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
 JOB_NAME=$1
-output_label=${1:-JOB_NAME}
+TASK_NAME=${2:-JOB_NAME}
 
 export JOB_DIR=/var/vcap/jobs/$JOB_NAME
 chmod 755 $JOB_DIR # to access file via symlink
@@ -25,7 +25,7 @@ chmod 755 $JOB_DIR # to access file via symlink
 source $JOB_DIR/data/properties.sh
 
 source $JOB_DIR/helpers/ctl_utils.sh
-redirect_output ${output_label}
+redirect_output ${TASK_NAME}
 
 export HOME=${HOME:-/home/vcap}
 
@@ -76,6 +76,6 @@ do
   export CLASSPATH=${java_jar}:$CLASSPATH
 done
 
-PIDFILE=$RUN_DIR/$JOB_NAME.pid
+PIDFILE=$RUN_DIR/$TASK_NAME.pid
 
 echo '$PATH' $PATH

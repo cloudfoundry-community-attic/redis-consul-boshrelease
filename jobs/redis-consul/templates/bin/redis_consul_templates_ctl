@@ -5,7 +5,7 @@ set -u # report the usage of uninitialized variables
 set -x
 
 # Setup env vars and folders for the webapp_ctl script
-source /var/vcap/jobs/redis-consul/helpers/ctl_setup.sh 'redis-consul'
+source /var/vcap/jobs/redis-consul/helpers/ctl_setup.sh 'redis-consul' 'redis-consul-templates'
 
 export CONSUL_TMPL_DIR=/var/vcap/sys/run/consul/redis-consul
 
@@ -25,7 +25,8 @@ case $1 in
 
     exec chpst -u vcap:vcap \
     consul-template \
-      -template "$JOB_DIR/consul/display.ctmpl:$CONSUL_TMPL_DIR/display" \
+      -template "$JOB_DIR/consul/display.ctmpl:$RUN_DIR/display" \
+      -template "$JOB_DIR/consul/redis-service.json:$CONSUL_TMPL_DIR/redis-service.json" \
          >>$LOG_DIR/$JOB_NAME.stdout.log \
          2>>$LOG_DIR/$JOB_NAME.stderr.log
 
